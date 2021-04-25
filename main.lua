@@ -51,7 +51,7 @@ M_7g4614(function()
 		Citizen.Wait(5)
 		for _, player in ipairs(GetActivePlayers()) do
 			local ped = GetPlayerPed(player)
-			if GetSelectedPedWeapon(ped) == `weapon_flashlight` then
+			if GetSelectedPedWeapon(ped) == `weapon_flashlight` and not IsPedFalling(ped) then
 				letSleep = false
 				AttachEntityToEntity(GetCurrentPedWeaponEntityIndex(ped), ped, GetPedBoneIndex(ped, 57005), 0.125, 0.07, -0.03, 55.0, -125.0, 0.0, 0, 0, 1, 0, 0, 1)
 				if DecorGetBool(ped,decor_fon) then
@@ -60,9 +60,11 @@ M_7g4614(function()
 					local vec = RotAnglesToVec(kierunek)
 					DrawSpotLight(coords.x,coords.y,coords.z,vec.x,vec.y,vec.z,255,255,255,100.0,15.0,25.0,15.0,50.0)
 				end
+			else
+				letSleep = true	
 			end		
 		end
-		if letSleep then Citizen.Wait(3000) end
+		if letSleep then Citizen.Wait(1000) end
 	end
 end)
 
